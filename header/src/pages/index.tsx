@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-interface HeaderProps {
-  onNavigate: (page: string) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
+const Header: React.FC = () => {
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [username, setUsername] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
+    const storedUsername = localStorage.getItem("chessUsername");
+    if (storedUsername) {
+      setIsRegistered(true);
+      setUsername(storedUsername);
+    }
+
     const handleUserRegistered = (event: CustomEvent<string>) => {
       setIsRegistered(true);
       setUsername(event.detail);
+      router.push("/chessboard");
     };
 
     window.addEventListener(
@@ -25,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         handleUserRegistered as EventListener,
       );
     };
-  }, []);
+  }, [router]);
 
   return (
     <nav
@@ -50,63 +56,36 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           <>
             <li style={{ margin: "0 10px" }}>Welcome, {username}!</li>
             <li style={{ margin: "0 10px" }}>
-              <button
-                onClick={() => onNavigate("chessboard")}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "white",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                }}
+              <Link
+                href="/chessboard"
+                style={{ color: "white", textDecoration: "none" }}
               >
                 Chessboard
-              </button>
+              </Link>
             </li>
             <li style={{ margin: "0 10px" }}>
-              <button
-                onClick={() => onNavigate("leaderboard")}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "white",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                }}
+              <Link
+                href="/leaderboard"
+                style={{ color: "white", textDecoration: "none" }}
               >
                 Leaderboard
-              </button>
+              </Link>
             </li>
           </>
         ) : (
           <>
             <li style={{ margin: "0 10px" }}>
-              <button
-                onClick={() => onNavigate("registration")}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "white",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                }}
-              >
+              <Link href="/" style={{ color: "white", textDecoration: "none" }}>
                 Registration
-              </button>
+              </Link>
             </li>
             <li style={{ margin: "0 10px" }}>
-              <button
-                onClick={() => onNavigate("leaderboard")}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "white",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                }}
+              <Link
+                href="/leaderboard"
+                style={{ color: "white", textDecoration: "none" }}
               >
                 Leaderboard
-              </button>
+              </Link>
             </li>
           </>
         )}

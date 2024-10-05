@@ -1,11 +1,9 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
-interface RegistrationProps {
-  onRegister: () => void;
-}
-
-const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
+const Registration: React.FC = () => {
   const [username, setUsername] = useState<string>("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,7 +11,7 @@ const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
     window.dispatchEvent(
       new CustomEvent("userRegistered", { detail: username }),
     );
-    onRegister();
+    router.push("/chessboard");
   };
 
   return (

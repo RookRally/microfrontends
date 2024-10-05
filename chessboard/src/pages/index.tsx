@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 const Lobby = dynamic(() => import("lobby/Lobby"), { ssr: false });
 
 const Chessboard: React.FC = () => {
+  const [username, setUsername] = useState<string | null>(null);
   const [activePlayers, setActivePlayers] = useState<string[] | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleOpponentSelected = (event: CustomEvent<string[]>) => {
@@ -20,6 +23,19 @@ const Chessboard: React.FC = () => {
       );
     };
   }, []);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("chessUsername");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    } else {
+      router.push("/");
+    }
+  }, [router]);
+
+  if (!username) {
+    return null; // or a loading indicator
+  }
 
   return (
     <div

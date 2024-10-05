@@ -1,11 +1,7 @@
 declare module "header/Header" {
   import { FC } from "react";
 
-  interface HeaderProps {
-    onNavigate: (page: string) => void;
-  }
-
-  const Header: FC<HeaderProps>;
+  const Header: FC;
   export default Header;
 }
 
@@ -26,10 +22,6 @@ declare module "leaderboard/Leaderboard" {
 declare module "registration/Registration" {
   import { FC } from "react";
 
-  interface UserRegistrationProps {
-    onRegister: () => void;
-  }
-
-  const UserRegistration: FC<UserRegistrationProps>;
+  const UserRegistration: FC;
   export default UserRegistration;
 }
