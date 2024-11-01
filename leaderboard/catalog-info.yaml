@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: leaderboard-microfrontend
+  description: |
+    The microfrontend that displays the leaderboard.
+  links:
+    - title: Website
+      url: http://backstage.io
+    - title: How-Tos
+      url: https://backstage.io/docs
+    - title: Storybook
+      url: https://backstage.io/storybook
+    - title: Slack Chat
+      url: https://discord.com/invite/EBHEGzX
+  annotations:
+    github.com/project-slug: RookRally/microfrontends
+spec:
+  owner: sat-leaderboard-team
+  lifecycle: production
+  type: microfrontend
+  consumesApis:
+    - leaderboard-rest-api
